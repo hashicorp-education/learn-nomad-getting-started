@@ -1,0 +1,15 @@
+region      = "GCP_REGION"
+zone        = "GCP_ZONE"
+project     = "PROJECT_ID"
+retry_join  = "provider=gce project_name=PROJECT_ID tag_value=auto-join"
+
+# These variables will default to the values shown
+# and do not need to be updated unless you want to
+# change them
+# allowlist_ip            = "0.0.0.0/0"
+# name                    = "nomad"
+# server_instance_type    = "e2-medium"
+# server_count            = "3"
+# client_instance_type    = "e2-medium"
+# client_count            = "2"
+# nomad_version           = "1.4.3"
