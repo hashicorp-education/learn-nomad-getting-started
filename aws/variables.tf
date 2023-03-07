@@ -45,5 +45,5 @@ variable "root_block_device_size" {
 
 variable "nomad_version" {
   description = "The version of the Nomad binary to install."
-  default     = "1.4.3"
+  default     = "1.5.0"
 }
