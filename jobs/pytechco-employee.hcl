@@ -2,7 +2,7 @@ job "pytechco-employee" {
   type = "batch"
 
   periodic {
-    cron = "0/3 * * * * * *"
+    cron             = "0/3 * * * * * *"
     prohibit_overlap = false
   }
 
@@ -11,24 +11,24 @@ job "pytechco-employee" {
 
     task "ptc-employee-task" {
 
-        restart {
-            attempts = 2
-            delay    = "15s"
-            interval = "10s"
-            mode     = "fail"
-        }
+      restart {
+        attempts = 2
+        delay    = "15s"
+        interval = "10s"
+        mode     = "fail"
+      }
 
-        template {
-                data        = <<EOH
+      template {
+        data        = <<EOH
 {{ range nomadService "redis-svc" }}
 REDIS_HOST={{ .Address }}
 REDIS_PORT={{ .Port }}
 PTC_EMPLOYEE_ID={{ env "NOMAD_SHORT_ALLOC_ID"}}
 {{ end }}
 EOH
-                destination = "local/env.txt"
-                env         = true
-            }
+        destination = "local/env.txt"
+        env         = true
+      }
       driver = "docker"
 
       config {

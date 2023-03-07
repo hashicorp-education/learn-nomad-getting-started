@@ -10,8 +10,8 @@ job "pytechco-redis" {
     }
 
     service {
-      name = "redis-svc"
-      port = "redis"
+      name     = "redis-svc"
+      port     = "redis"
       provider = "nomad"
     }
 

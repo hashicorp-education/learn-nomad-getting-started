@@ -10,17 +10,17 @@ job "pytechco-setup" {
 
     task "ptc-setup-task" {
 
-        template {
-                data        = <<EOH
+      template {
+        data        = <<EOH
 {{ range nomadService "redis-svc" }}
 REDIS_HOST={{ .Address }}
 REDIS_PORT={{ .Port }}
 {{ end }}
 PTC_BUDGET={{ env "NOMAD_META_budget" }}
 EOH
-                destination = "local/env.txt"
-                env         = true
-            }
+        destination = "local/env.txt"
+        env         = true
+      }
       driver = "docker"
 
       config {
