@@ -1,5 +1,4 @@
 job "pytechco-redis" {
-  datacenters = ["dc1"]
   type = "service"
 
   group "ptc-redis" {

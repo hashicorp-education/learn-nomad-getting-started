@@ -1,5 +1,4 @@
 job "pytechco-web" {
-  datacenters = ["dc1"]
   type = "service"
 
   group "ptc-web" {
@@ -39,6 +38,3 @@ EOH
     }
   }
 }
-
-# Once deployed, use the following command to get the public URL for the webapp:
-# nomad node status -verbose $(nomad job allocs pytechco-web | grep -i running | awk '{print $2}') | grep -i public-ipv4 | awk -F "=" '{print $2}' | xargs | awk '{print "http://"$1":5000"}'

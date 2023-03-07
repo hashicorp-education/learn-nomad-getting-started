@@ -1,10 +1,8 @@
 job "pytechco-setup" {
-  datacenters = ["dc1"]
-
   type = "batch"
 
-    parameterized {
-      meta_required = ["budget"]
+  parameterized {
+    meta_required = ["budget"]
   }
 
   group "ptc-setup" {

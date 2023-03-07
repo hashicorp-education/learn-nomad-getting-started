@@ -1,11 +1,11 @@
 job "pytechco-employee" {
-  datacenters = ["dc1"]
+  type = "batch"
 
-    type = "batch"
-    periodic {
-        cron = "0/3 * * * * * *"
-        prohibit_overlap = false
-    }
+  periodic {
+    cron = "0/3 * * * * * *"
+    prohibit_overlap = false
+  }
+
   group "ptc-employee" {
     count = 1
 
