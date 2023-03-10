@@ -1,3 +1,7 @@
+output "nomad_ip" {
+  value = "http://${google_compute_instance.server[0].network_interface.0.access_config.0.nat_ip}:4646/ui"
+}
+
 output "IP_Addresses" {
   value = <<CONFIGURATION
 

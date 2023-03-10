@@ -1,3 +1,7 @@
+output "nomad_ip" {
+  value = "http://${azurerm_linux_virtual_machine.server[0].public_ip_address}:4646/ui"
+}
+
 output "IP_Addresses" {
   value = <<CONFIGURATION
 
