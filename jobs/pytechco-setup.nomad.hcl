@@ -24,7 +24,7 @@ EOH
       driver = "docker"
 
       config {
-        image = "arussohashi/ptc-setup:latest"
+        image = "ghcr.io/hashicorp-education/learn-nomad-getting-started/ptc-setup:1.0"
       }
     }
   }

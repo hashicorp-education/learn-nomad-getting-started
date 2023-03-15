@@ -32,7 +32,7 @@ EOH
       driver = "docker"
 
       config {
-        image = "arussohashi/ptc-web:latest"
+        image = "ghcr.io/hashicorp-education/learn-nomad-getting-started/ptc-web:1.0"
         ports = ["web"]
       }
     }
