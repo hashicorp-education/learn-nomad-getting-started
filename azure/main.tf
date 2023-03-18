@@ -192,7 +192,7 @@ resource "azurerm_linux_virtual_machine" "server" {
       region                    = var.location
       cloud_env                 = "azure"
       server_count              = "${var.server_count}"
-      retry_join                = var.retry_join
+      retry_join                = "provider=azure tag_name=NomadJoinTag tag_value=auto-join subscription_id=${var.subscription_id} tenant_id=${var.tenant_id} client_id=${var.client_id} secret_access_key=${var.client_secret}"
       nomad_version             = var.nomad_version
   }))}"
 }

@@ -17,15 +17,11 @@ variable "client_id" {
 
 variable "client_secret" {
   description = "The Azure client secret to use."
+  sensitive = true
 }
 
 variable "tenant_id" {
   description = "The Azure tenant ID to use."
-}
-
-variable "retry_join" {
-  description = "Used by Nomad to automatically form a cluster."
-  type        = string
 }
 
 variable "allowlist_ip" {

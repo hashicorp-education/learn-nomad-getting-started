@@ -7,8 +7,6 @@ client_secret = "CLIENT_SECRET"
 resource_group_name = "RESOURCE_GROUP_NAME"
 storage_account = "STORAGE_ACCOUNT_NAME"
 
-retry_join = "provider=azure tag_name=NomadJoinTag tag_value=auto-join subscription_id=SUBSCRIPTION_ID tenant_id=TENANT_ID client_id=CLIENT_ID secret_access_key=CLIENT_SECRET"
-
 # These variables will default to the values shown
 # and do not need to be updated unless you want to
 # change them
