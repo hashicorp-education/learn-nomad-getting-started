@@ -17,6 +17,10 @@ provider "azurerm" {
   tenant_id = var.tenant_id
 }
 
+locals {
+  retry_join = "provider=azure tag_name=NomadJoinTag tag_value=auto-join subscription_id=${var.subscription_id} tenant_id=${var.tenant_id} client_id=${var.client_id} secret_access_key=${var.client_secret}"
+}
+
 resource "tls_private_key" "private_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -192,7 +196,7 @@ resource "azurerm_linux_virtual_machine" "server" {
       region                    = var.location
       cloud_env                 = "azure"
       server_count              = "${var.server_count}"
-      retry_join                = "provider=azure tag_name=NomadJoinTag tag_value=auto-join subscription_id=${var.subscription_id} tenant_id=${var.tenant_id} client_id=${var.client_id} secret_access_key=${var.client_secret}"
+      retry_join                = local.retry_join
       nomad_version             = var.nomad_version
   }))}"
 }
@@ -268,7 +272,7 @@ resource "azurerm_linux_virtual_machine" "client" {
   custom_data    = "${base64encode(templatefile("../shared/data-scripts/user-data-client.sh", {
       region                    = var.location
       cloud_env                 = "azure"
-      retry_join                = var.retry_join
+      retry_join                = local.retry_join
       nomad_version             = var.nomad_version
   }))}"
 }
