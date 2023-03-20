@@ -10,6 +10,10 @@ data "aws_vpc" "default" {
   default = true
 }
 
+locals {
+  retry_join = "provider=aws tag_key=NomadJoinTag tag_value=auto-join"
+}
+
 resource "aws_security_group" "nomad_ui_ingress" {
   name   = "${var.name}-ui-ingress"
   vpc_id = data.aws_vpc.default.id
@@ -155,6 +159,18 @@ resource "aws_key_pair" "generated_key" {
   public_key = tls_private_key.private_key.public_key_openssh
 }
 
+# Uncomment the private key resource below if you want to SSH to any of the instances
+# Run init and apply again after uncommenting:
+# terraform init && terraform apply
+# Then SSH with the tf-key.pem file:
+# ssh -i tf-key.pem ubuntu@INSTANCE_PUBLIC_IP
+
+# resource "local_file" "tf_pem" {
+#   filename = "${path.module}/tf-key.pem"
+#   content = tls_private_key.private_key.private_key_pem
+#   file_permission = "0400"
+# }
+
 resource "aws_instance" "server" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.server_instance_type
@@ -201,7 +217,7 @@ resource "aws_instance" "server" {
     server_count              = var.server_count
     region                    = var.region
     cloud_env                 = "aws"
-    retry_join                = var.retry_join
+    retry_join                = local.retry_join
     nomad_version             = var.nomad_version
   })
   iam_instance_profile = aws_iam_instance_profile.instance_profile.name
@@ -264,7 +280,7 @@ resource "aws_instance" "client" {
   user_data = templatefile("../shared/data-scripts/user-data-client.sh", {
     region                    = var.region
     cloud_env                 = "aws"
-    retry_join                = var.retry_join
+    retry_join                = local.retry_join
     nomad_version             = var.nomad_version
   })
   iam_instance_profile = aws_iam_instance_profile.instance_profile.name

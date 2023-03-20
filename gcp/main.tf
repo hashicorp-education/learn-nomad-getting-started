@@ -2,6 +2,10 @@ terraform {
   required_version = ">= 0.12"
 }
 
+locals {
+  retry_join = "provider=gce project_name=${var.project} tag_value=auto-join"
+}
+
 provider "google" {
   project = var.project
   region  = var.region
@@ -82,6 +86,18 @@ resource "tls_private_key" "private_key" {
   rsa_bits  = 4096
 }
 
+# Uncomment the private key resource below if you want to SSH to any of the instances
+# Run init and apply again after uncommenting:
+# terraform init && terraform apply
+# Then SSH with the tf-key.pem file:
+# ssh -i tf-key.pem ubuntu@INSTANCE_PUBLIC_IP
+
+# resource "local_file" "tf_pem" {
+#   filename = "${path.module}/tf-key.pem"
+#   content = tls_private_key.private_key.private_key_pem
+#   file_permission = "0400"
+# }
+
 resource "google_compute_instance" "server" {
   count        = var.server_count
   name         = "${var.name}-server-${count.index}"
@@ -137,7 +153,7 @@ resource "google_compute_instance" "server" {
     server_count              = var.server_count
     region                    = var.region
     cloud_env                 = "gce"
-    retry_join                = var.retry_join
+    retry_join                = local.retry_join
     nomad_version             = var.nomad_version
   })
 }
@@ -196,7 +212,7 @@ resource "google_compute_instance" "client" {
   metadata_startup_script = templatefile("../shared/data-scripts/user-data-client.sh", {
     region                    = var.region
     cloud_env                 = "gce"
-    retry_join                = var.retry_join
+    retry_join                = local.retry_join
     nomad_version             = var.nomad_version
   })
 }

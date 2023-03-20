@@ -22,12 +22,3 @@ Copy the token value and use it to log in to the UI:
 cat nomad-management.token
 CONFIGURATION
 }
-
-# Uncomment the private key output below if you want to SSH to any of the instances - do so with:
-# terraform output -raw private_key > tf-key.pem && chmod 600 tf-key.pem
-# ssh -i tf-key.pem ubuntu@INSTANCE_PUBLIC_IP
-
-# output "private_key" {
-#   value     = tls_private_key.private_key.private_key_pem
-#   sensitive = true
-# }

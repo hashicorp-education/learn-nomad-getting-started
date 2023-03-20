@@ -1,7 +1,6 @@
 region      = "GCP_REGION"
 zone        = "GCP_ZONE"
 project     = "PROJECT_ID"
-retry_join  = "provider=gce project_name=PROJECT_ID tag_value=auto-join"
 
 # These variables will default to the values shown
 # and do not need to be updated unless you want to

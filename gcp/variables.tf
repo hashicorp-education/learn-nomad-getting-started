@@ -15,11 +15,6 @@ variable "name" {
   default     = "nomad"
 }
 
-variable "retry_join" {
-  description = "Used by Nomad to automatically form a cluster."
-  type        = string
-}
-
 variable "allowlist_ip" {
   description = "IP to allow access for the security groups (set 0.0.0.0/0 for world)"
   default     = "0.0.0.0/0"

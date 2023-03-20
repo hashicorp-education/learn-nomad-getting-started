@@ -8,6 +8,10 @@ terraform {
   }
 }
 
+locals {
+  retry_join = "provider=azure tag_name=NomadJoinTag tag_value=auto-join subscription_id=${var.subscription_id} tenant_id=${var.tenant_id} client_id=${var.client_id} secret_access_key=${var.client_secret}"
+}
+
 provider "azurerm" {
   features {}
 
@@ -21,6 +25,18 @@ resource "tls_private_key" "private_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
+
+# Uncomment the private key resource below if you want to SSH to any of the instances
+# Run init and apply again after uncommenting:
+# terraform init && terraform apply
+# Then SSH with the tf-key.pem file:
+# ssh -i tf-key.pem ubuntu@INSTANCE_PUBLIC_IP
+
+# resource "local_file" "tf_pem" {
+#   filename = "${path.module}/tf-key.pem"
+#   content = tls_private_key.private_key.private_key_pem
+#   file_permission = "0400"
+# }
 
 resource "azurerm_resource_group" "hashistack" {
   name     = "hashistack"
@@ -192,7 +208,7 @@ resource "azurerm_linux_virtual_machine" "server" {
       region                    = var.location
       cloud_env                 = "azure"
       server_count              = "${var.server_count}"
-      retry_join                = var.retry_join
+      retry_join                = local.retry_join
       nomad_version             = var.nomad_version
   }))}"
 }
@@ -268,7 +284,7 @@ resource "azurerm_linux_virtual_machine" "client" {
   custom_data    = "${base64encode(templatefile("../shared/data-scripts/user-data-client.sh", {
       region                    = var.location
       cloud_env                 = "azure"
-      retry_join                = var.retry_join
+      retry_join                = local.retry_join
       nomad_version             = var.nomad_version
   }))}"
 }

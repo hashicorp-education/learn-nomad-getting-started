@@ -7,12 +7,6 @@ variable "region" {
   description = "The AWS region to deploy to."
 }
 
-variable "retry_join" {
-  description = "Used by Nomad to automatically form a cluster."
-  type        = string
-  default     = "provider=aws tag_key=NomadJoinTag tag_value=auto-join"
-}
-
 variable "allowlist_ip" {
   description = "IP to allow access for the security groups (set 0.0.0.0/0 for world)"
   default     = "0.0.0.0/0"
