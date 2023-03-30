@@ -34,6 +34,7 @@ EOH
       config {
         image = "ghcr.io/hashicorp-education/learn-nomad-getting-started/ptc-web:1.0"
         ports = ["web"]
+        network_mode = "host"
       }
     }
   }
