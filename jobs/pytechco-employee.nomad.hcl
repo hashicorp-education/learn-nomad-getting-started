@@ -36,6 +36,7 @@ EOH
         // args = [
         //     "--employee-type", "sales_engineer"
         // ]
+        network_mode = "host"
       }
     }
   }
