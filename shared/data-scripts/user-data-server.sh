@@ -38,8 +38,15 @@ case $CLOUD_ENV in
     IP_ADDRESS=$(curl -s -H Metadata:true --noproxy "*" http://169.254.169.254/metadata/instance/network/interface/0/ipv4/ipAddress/0?api-version=2021-12-13 | jq -r '.["privateIpAddress"]')
     ;;
 
+  alicloud)
+    echo "CLOUD_ENV: alicloud"
+    sudo apt-get update && sudo apt-get install -y software-properties-common
+    IP_ADDRESS=$(curl http://100.100.100.200/latest/meta-data/private-ipv4)
+    PUBLIC_IP=$(curl http://100.100.100.200/latest/meta-data/eipv4)
+    ;;
+
   *)
-    exit "CLOUD_ENV not set to one of aws, gce, or azure - exiting."
+    exit "CLOUD_ENV not set to one of aws, gce, azure, or alicloud - exiting."
     ;;
 esac
 
