@@ -1,0 +1,13 @@
+# See https://www.alibabacloud.com/help/en/basics-for-beginners/latest/regions-and-zones for IDs
+region      = "ALICLOUD_REGION"
+
+# These variables will default to the values shown
+# and do not need to be updated unless you want to
+# change them
+# allowlist_ip            = "0.0.0.0/0"
+# name                    = "nomad"
+# server_instance_type    = "ecs.t6-c2m1.large"
+# server_count            = "3"
+# client_instance_type    = "ecs.t6-c2m1.large"
+# client_count            = "2"
+# nomad_version           = "1.5.0"
