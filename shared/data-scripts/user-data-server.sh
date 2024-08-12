@@ -22,8 +22,10 @@ case $CLOUD_ENV in
   aws)
     echo "CLOUD_ENV: aws"
     sudo apt-get update && sudo apt-get install -y software-properties-common
-    IP_ADDRESS=$(curl http://instance-data/latest/meta-data/local-ipv4)
-    PUBLIC_IP=$(curl http://instance-data/latest/meta-data/public-ipv4)
+    TOKEN=$(curl -X PUT "http://instance-data/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+    IP_ADDRESS=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://instance-data/latest/meta-data/local-ipv4)
+    PUBLIC_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://instance-data/latest/meta-data/public-ipv4)
     ;;
 
   gce)
