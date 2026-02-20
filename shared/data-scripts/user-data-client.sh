@@ -68,7 +68,7 @@ sudo chmod 755 $NOMADDIR
 
 # Docker
 distro=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
-sudo apt-get install -y apt-transport-https ca-certificates gnupg2 
+sudo apt-get install -y apt-transport-https ca-certificates gnupg2
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$${distro} $(lsb_release -cs) stable"
 sudo apt-get update
@@ -76,7 +76,7 @@ sudo apt-get install -y docker-ce
 
 # Java
 sudo add-apt-repository -y ppa:openjdk-r/ppa
-sudo apt-get update 
+sudo apt-get update
 sudo apt-get install -y openjdk-8-jdk
 JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
 
@@ -85,6 +85,7 @@ curl -L -o cni-plugins.tgz "https://github.com/containernetworking/plugins/relea
 sudo mkdir -p /opt/cni/bin
 sudo tar -C /opt/cni/bin -xzf cni-plugins.tgz
 
+sudo modprobe br_netfilter
 echo 1 | sudo tee /proc/sys/net/bridge/bridge-nf-call-arptables
 echo 1 | sudo tee /proc/sys/net/bridge/bridge-nf-call-ip6tables
 echo 1 | sudo tee /proc/sys/net/bridge/bridge-nf-call-iptables
@@ -131,4 +132,4 @@ sudo mv /etc/resolv.conf.new /etc/resolv.conf
 echo "export NOMAD_ADDR=http://$IP_ADDRESS:4646" | sudo tee --append /home/$HOME_DIR/.bashrc
 echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre"  | sudo tee --append /home/$HOME_DIR/.bashrc
 
-# Server setup phase finish -----------------------------------
+# Client setup phase finish -----------------------------------
